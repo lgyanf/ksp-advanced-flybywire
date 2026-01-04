@@ -491,7 +491,11 @@ namespace KSPAdvancedFlyByWire
             {
                 foreach (DiscreteAction action in actions)
                 {
-                    m_FlightManager.EvaluateDiscreteActionRelease(config, action, state);
+                    var binding = config.GetCurrentPreset().GetBitsetForDiscreteBinding(action);
+                    if (binding != null && binding.Get(button))
+                    {
+                        m_FlightManager.EvaluateDiscreteActionRelease(config, action, state);
+                    }
                 }
             }
         }
